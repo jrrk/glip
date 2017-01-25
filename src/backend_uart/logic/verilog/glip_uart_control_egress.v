@@ -72,7 +72,7 @@ module glip_uart_control_egress
    // Sequential part of state machine
    always @(posedge clk) begin
       if (rst) begin
-         state <= STATE_PASSTHROUGH;
+         state <= STATE_IDLE;
       end else begin
          state <= nxt_state;
       end
@@ -105,7 +105,7 @@ module glip_uart_control_egress
         STATE_PASSTHROUGH: begin
            // Pass-through data and start transfer
            out_data = in_data;
-           out_enable = 1'b1;
+           out_enable = can_send;
            if (out_done) begin
               // In this cycle the transfer completed
               // Acknowledge
